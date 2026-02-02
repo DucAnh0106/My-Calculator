@@ -1,0 +1,41 @@
+1. General Layout & Theme
+- Theme: Modern Dark Mode (High Contrast).
+- Font Family: San-serif (System UI, Inter, or Roboto).
+- Page Background Color: Deep Blue-Grey (approx. #22252D).
+- Calculator Body Background: Dark Charcoal/Grey (approx. #2A2D36).
+- Body Corner Radius: 30px to 40px (smooth continuous corners).
+- Box Shadow: Soft, large drop shadow to elevate the calculator off the background.
+
+2. The Display Screen
+- Background Color: Very Dark Navy/Black (approx. #1B1E26).
+- Text Color (Current Operand): White (#FFFFFF).
+- Text Color (History/Operation): Light Grey / Opacity 60% (approx. #AAAAAA).
+- Font Size (Current): Large, approx 3rem or 48px.
+- Font Weight: Medium to Bold (500 - 600).
+- Corner Radius: 20px.
+- Alignment: Right-aligned.
+
+3. Button Geometry
+- Shape: Circular.
+- Border Radius: 50% (Perfect circles).
+- Dimensions: Aspect ratio 1:1 (Height equals Width, approx 65px to 70px).
+- Grid Gap: Approx 15px between buttons.
+- Border: None.
+
+4. Button Color Palettes
+
+A. Number Buttons (0-9, .)
+- Background Color: Medium Dark Grey (approx. #3A3F4B or #4E505F).
+- Text Color: White (#FFFFFF).
+
+B. Top Row Functions (C, Backspace, %)
+- Background Color: Medium Dark Grey (Same as numbers or slightly lighter/bluish tint).
+- Text Color: Cyan / Light Blue (approx. #29B6F6 or #4FC3F7) — Based on the request to "add coloring to text".
+
+C. Right Column Operators (÷, ×, -, +)
+- Background Color: Bright Orange (approx. #FF9F43 or #FF9500).
+- Text Color: Dark Grey (#22252D) or White (depending on contrast preference, usually darker on bright orange for legibility).
+
+D. The Equals Button (=)
+- Background Color: Emerald Green (approx. #2ECC71 or #4ADE86).
+- Text Color: White (#FFFFFF).
