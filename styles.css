@@ -9,23 +9,34 @@ body {
 
 #container {
     border: 1px solid red;
-    padding: 20px;
+    padding: 25px;
+    width: 320px;
+    height: 445px;
 
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 11px;
 }
 
 #textBox {
-    height: 40px;
+    height: 60px;
     border: 1px solid red;
 }
 
 .buttonsRow {
     box-sizing: border-box;
-    width: 160px;
 
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.buttonsRow button {
+    padding: 0;
+
+    display: inline-block;
+    width: 64px;
+    height: 64px;
+
+    border-radius: 50%;
 }
