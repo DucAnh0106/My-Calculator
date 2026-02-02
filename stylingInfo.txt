@@ -24,18 +24,22 @@
 
 4. Button Color Palettes
 
-A. Number Buttons (0-9, .)
+A. Number Buttons (0-9, ., +/-)
 - Background Color: Medium Dark Grey (approx. #3A3F4B or #4E505F).
 - Text Color: White (#FFFFFF).
+- Text size: 20px.
 
 B. Top Row Functions (C, Backspace, %)
 - Background Color: Medium Dark Grey (Same as numbers or slightly lighter/bluish tint).
-- Text Color: Cyan / Light Blue (approx. #29B6F6 or #4FC3F7) — Based on the request to "add coloring to text".
+- Text Color: Cyan / Light Blue (approx. #29B6F6 or #4FC3F7)
+- Text size: 20px.
 
 C. Right Column Operators (÷, ×, -, +)
 - Background Color: Bright Orange (approx. #FF9F43 or #FF9500).
 - Text Color: Dark Grey (#22252D) or White (depending on contrast preference, usually darker on bright orange for legibility).
+- Text size: 20px.
 
 D. The Equals Button (=)
 - Background Color: Emerald Green (approx. #2ECC71 or #4ADE86).
 - Text Color: White (#FFFFFF).
+- Text size: 20px.
