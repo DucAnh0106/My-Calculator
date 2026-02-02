@@ -10,12 +10,12 @@ body {
 #container {
     border: 1px solid red;
     padding: 25px;
-    width: 320px;
+    width: 315px;
     height: 445px;
 
     display: flex;
     flex-direction: column;
-    gap: 11px;
+    gap: 8px;
 }
 
 #textBox {
@@ -27,16 +27,39 @@ body {
     box-sizing: border-box;
 
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
+    gap: 15px;
 }
 
 .buttonsRow button {
+    font-size: 20px;
     padding: 0;
+    border: 0;
 
     display: inline-block;
-    width: 64px;
-    height: 64px;
+    width: 67px;
+    height: 67px;
 
     border-radius: 50%;
+}
+
+.numberButtons {
+    background-color: #4E505F;
+    color: white;
+}
+
+.topRowFunctions_buttons {
+    background-color: #656879;
+    color: #4FC3F7;
+}
+
+.operators {
+    background-color: #FF9F43;
+    color: #22252D;
+}
+
+#equalButton {
+    background-color: #4ADE86;
+    color: white;
 }
