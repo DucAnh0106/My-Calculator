@@ -26,11 +26,24 @@ function operation(firstNumber, secondNumber, secondNumber) {
 }
 }
 
-let firstNumber = Number( prompt('Enter first number','') );
-let operator = prompt('Enter +, -, * or /','');
-let secondNumber = Number( prompt('Enter second number','') );
+let firstNumber;
+let operator;
+let secondNumber;
 
-console.log ( operation(firstNumber, operator, secondNumber) );
+//target text box
+const textBox = document.querySelector('#textBox');
+let textBoxDisplay = document.createElement('span');
+
+textBox.appendChild(textBoxDisplay);
+
+//target buttons
+const numberButtons = document.querySelectorAll('.numberButtons');
+
+numberButtons.forEach( button => {
+    button.addEventListener('click', (event) => {
+        textBoxDisplay.textContent = event.target.textContent;
+    });
+});
 
 
 
