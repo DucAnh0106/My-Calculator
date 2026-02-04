@@ -39,15 +39,52 @@ textBox.appendChild(textBoxDisplay);
 //target buttons
 const numberButtons = document.querySelectorAll('.numberButtons');
 
-const updateAndDisplayNumber = function (event) {
-    firstNumber = Number(event.target.textContent);
+
+const displayOnScreen = function(event) {
     textBoxDisplay.textContent = event.target.textContent;
 }
 
+const updateNumber = function (event) {
+    let currentDisplayText = textBoxDisplay.textContent;
+    console.log(`Current text: ${textBoxDisplay.textContent}`);
+    //If current text is not an operator
+    //it means we're still inputting the first Number
+    if ( isNaN(currentDisplayText) ) { 
+        secondNumber = Number(event.target.textContent);
+        console.log(`Current second Number: ${secondNumber}`);
+    } else {
+        firstNumber = Number(event.target.textContent); 
+        console.log(`Current first Number: ${firstNumber}`);
+    }
+
+    displayOnScreen(event);
+}
+
 numberButtons.forEach( button => {
-    button.addEventListener('click', updateAndDisplayNumber);
+    button.addEventListener('click', updateNumber);
 });
 
+//target operators
+const operators = document.querySelectorAll('.operators');
+
+const updateOperator = function(event) {
+    operator = event.target.textContent;
+    displayOnScreen(event);
+    console.log(`Current text: ${textBoxDisplay.textContent}`);
+}
+
+operators.forEach( operator => {
+    operator.addEventListener('click', updateOperator);
+})
+
+//target equal button
+const equalButton = document.querySelector('#equalButton');
+let result;
+
+equalButton.addEventListener('click', (event) => {
+    result = operation(firstNumber, operator, secondNumber);
+    textBoxDisplay.textContent = result;
+})
 
 
 
