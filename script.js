@@ -14,7 +14,7 @@ function multiplyNumbers(firstNumber, secondNumber) {
     return firstNumber * secondNumber;
 }
 
-function operation(firstNumber, secondNumber, secondNumber) {
+function operation(firstNumber, operator, secondNumber) {
     if (operator === '+') {
         return addNumbers(firstNumber, secondNumber);
     } else if (operator === '-') {
@@ -39,11 +39,18 @@ textBox.appendChild(textBoxDisplay);
 //target buttons
 const numberButtons = document.querySelectorAll('.numberButtons');
 
+const updateAndDisplayNumber = function (event) {
+    firstNumber = Number(event.target.textContent);
+    textBoxDisplay.textContent = event.target.textContent;
+}
+
 numberButtons.forEach( button => {
-    button.addEventListener('click', (event) => {
-        textBoxDisplay.textContent = event.target.textContent;
-    });
+    button.addEventListener('click', updateAndDisplayNumber);
 });
+
+
+
+
 
 
 
