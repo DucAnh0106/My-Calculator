@@ -19,7 +19,7 @@ function operation(firstNumber, operator, secondNumber) {
         return addNumbers(firstNumber, secondNumber);
     } else if (operator === '-') {
         return subtractNumbers(firstNumber, secondNumber);
-    } else if (operator === '*') {
+    } else if (operator === '×') {
         return multiplyNumbers(firstNumber, secondNumber);
     } else {
         return divideNumbers(firstNumber, secondNumber);
@@ -30,6 +30,9 @@ let firstNumber;
 let operator;
 let secondNumber;
 
+let firstNumberStorage = '';
+let secondNumberStorage = '';
+
 //target text box
 const textBox = document.querySelector('#textBox');
 let textBoxDisplay = document.createElement('span');
@@ -39,9 +42,17 @@ textBox.appendChild(textBoxDisplay);
 //target buttons
 const numberButtons = document.querySelectorAll('.numberButtons');
 
+//when we are expecting to add digits to firstNumber, status is true
+//else, status is false
+let inputStatus = true;
+
 
 const displayOnScreen = function(event) {
-    textBoxDisplay.textContent = event.target.textContent;
+    if ( inputStatus === true ) {
+        textBoxDisplay.textContent = firstNumberStorage;
+    } else {
+        textBoxDisplay.textContent = secondNumberStorage;
+    }
 }
 
 const updateNumber = function (event) {
@@ -49,11 +60,13 @@ const updateNumber = function (event) {
     console.log(`Current text: ${textBoxDisplay.textContent}`);
     //If current text is not an operator
     //it means we're still inputting the first Number
-    if ( isNaN(currentDisplayText) ) { 
-        secondNumber = Number(event.target.textContent);
+    if ( inputStatus === false ) { 
+        secondNumberStorage += event.target.textContent;
+        secondNumber = Number(secondNumberStorage);
         console.log(`Current second Number: ${secondNumber}`);
     } else {
-        firstNumber = Number(event.target.textContent); 
+        firstNumberStorage += event.target.textContent;
+        firstNumber = Number(firstNumberStorage); 
         console.log(`Current first Number: ${firstNumber}`);
     }
 
@@ -69,7 +82,9 @@ const operators = document.querySelectorAll('.operators');
 
 const updateOperator = function(event) {
     operator = event.target.textContent;
-    displayOnScreen(event);
+
+    textBoxDisplay.textContent = event.target.textContent;
+    inputStatus = false;
     console.log(`Current text: ${textBoxDisplay.textContent}`);
 }
 
