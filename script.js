@@ -99,6 +99,12 @@ let result;
 equalButton.addEventListener('click', (event) => {
     result = operation(firstNumber, operator, secondNumber);
     textBoxDisplay.textContent = result;
+
+    //this is to reset the states back to input firstNumber 
+    inputStatus = true;
+    firstNumber = result;
+    //firstNumberStorage = '' but no need cause it's already a result
+    secondNumberStorage = '' //reset back to nothing to wait for another number to perform operations on
 })
 
 
