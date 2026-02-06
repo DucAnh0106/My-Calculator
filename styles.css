@@ -37,6 +37,9 @@ body {
     font-weight: 500;
     border-radius: 20px;
     text-align: right;
+
+    /* add overflow */
+    overflow-x: auto;
 }
 
 .buttonsRow {
