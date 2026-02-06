@@ -65,7 +65,7 @@ const editNumber = function (event) {
     }
 
     //display user enter on screen
-    displayOnScreen(event);
+    displayOnScreen();
 }
 
 numberButtons.forEach( button => {
@@ -122,7 +122,23 @@ const clearText = function() {
 }
 
 const deleteText = function() {
+    //add a new post-equal decision: to edit Result then chain operations
+    if(isEqualButtonClicked) {
+        //modify result 
+        modifiedResult = String(result).slice(0,-1);
 
+        //display modified result
+        textBoxDisplay.textContent = modifiedResult;
+
+        //this time, have to reassign new value back to result
+        //(can also put in chooseOperator but it might confuse the code)
+        //=> so it's like a tradeoff, we keep updating the latest value to result
+        result = Number(modifiedResult);
+    } else { //this is for when we're editing first/second number
+       userInputBuffer = userInputBuffer.slice(0, -1);
+
+       textBoxDisplay.textContent = userInputBuffer;
+    }
 }
 
 const addPercentage = function() {
@@ -139,7 +155,6 @@ topRowFunctions_buttons.forEach( button => {
         button.addEventListener('click', addPercentage );
     }
 })
-
 
 
 
