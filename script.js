@@ -117,8 +117,22 @@ equalButton.addEventListener('click', (event) => {
 //Code for AC and DEL
 const topRowFunctions_buttons = document.querySelectorAll('.topRowFunctions_buttons');
 
+//Reset back to a point when we first use the calculator
 const clearText = function() {
+    //Reset the visual buffer (what the user is typing)
+    userInputBuffer = '';
 
+    //Reset the logic variables
+    firstNumber = undefined;
+    secondNumber = undefined; 
+    operator = undefined;
+    result = undefined;
+
+    //Reset the state flag
+    isEqualButtonClicked = false;
+
+    //Update the screen to show the empty state
+    textBoxDisplay.textContent = '';
 }
 
 const deleteText = function() {
