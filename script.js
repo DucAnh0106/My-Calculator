@@ -136,7 +136,7 @@ const clearText = function() {
 }
 
 const deleteText = function() {
-    //add a new post-equal decision: to edit Result then chain operations
+    //A new post-equal decision: to edit Result then chain operations
     if(isEqualButtonClicked) {
         //modify result 
         modifiedResult = String(result).slice(0,-1);
@@ -156,7 +156,22 @@ const deleteText = function() {
 }
 
 const addPercentage = function() {
-
+    //A new post-equal decision: User presses % immediately after getting a result
+    if (isEqualButtonClicked) {
+        result = result / 100;
+        textBoxDisplay.textContent = result;
+    } 
+    //User is currently typing a number and want to get percentage of it
+    else if (userInputBuffer !== '') {
+        //Convert current buffer to number and divide by 100
+        let percentValue = Number(userInputBuffer) / 100;
+        
+        //Update the buffer with the new value so future math works
+        userInputBuffer = String(percentValue);
+        
+        //Update the screen
+        textBoxDisplay.textContent = userInputBuffer;
+    }
 }
 
 
