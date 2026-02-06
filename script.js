@@ -59,14 +59,21 @@ const chooseOperator = function(event) {
     operator = event.target.textContent;
     textBoxDisplay.textContent = operator;
 
-    //Check if a number button is pressed after an operator button is pressed
-    //Take a bit long cause run a loop through all number buttons whenever the operator is clicked
-    numberButtons.forEach( button => {
-        if (button.clicked === true) {
-            firstNumber = Number( userInputBuffer );
-            userInputBuffer = ''; //Switch back to edit mode
-        }
-    });
+    //Check if a number button is pressed after an operator button is pressed (for 2nd operation onward)
+    if (secondNumber !== undefined) {
+        numberButtons.forEach( button => {
+            if (button.clicked === true) {
+                firstNumber = Number( userInputBuffer );
+                userInputBuffer = ''; //Switch back to edit mode
+                console.log(firstNumber);
+
+                return;
+            }
+        });
+    }
+
+    firstNumber = Number(userInputBuffer);
+    userInputBuffer = ''; //Switch back to edit mode
 }
 
 operators.forEach( operator => {
