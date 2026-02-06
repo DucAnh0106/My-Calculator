@@ -28,7 +28,9 @@ let secondNumber;
 
 let userInputBuffer = '';
 
-let clickNumberButton;
+//server to remember have we click the equal button
+//work even if the user spam clicking Equal
+let isEqualButtonClicked = false;
 
 //target text box
 const textBox = document.querySelector('#textBox');
@@ -43,9 +45,20 @@ const displayOnScreen = function() {
 }
 
 const editNumber = function (event) {
-    userInputBuffer += event.target.textContent;
-    displayOnScreen(event);
 
+    //check if the user's intent after clicking equal is to restart all calculations
+    //click a number after equal
+    if (isEqualButtonClicked) {
+        userInputBuffer = '';
+        userInputBuffer += event.target.textContent;
+
+        isEqualButtonClicked = false; //reset the state to test user's intent for next operation
+    } else {
+        userInputBuffer += event.target.textContent;
+    }
+
+    //display user enter on screen
+    displayOnScreen(event);
 }
 
 numberButtons.forEach( button => {
@@ -56,24 +69,22 @@ numberButtons.forEach( button => {
 const operators = document.querySelectorAll('.operators');
 
 const chooseOperator = function(event) {
+    //display operator on the screen
     operator = event.target.textContent;
     textBoxDisplay.textContent = operator;
 
-    //Check if a number button is pressed after an operator button is pressed (for 2nd operation onward)
-    if (secondNumber !== undefined) {
-        numberButtons.forEach( button => {
-            if (button.clicked === true) {
-                firstNumber = Number( userInputBuffer );
-                userInputBuffer = ''; //Switch back to edit mode
-                console.log(firstNumber);
+    //if an operator is pressed after the equal button is pressed (for 2nd operation onward)
+    if (isEqualButtonClicked) {
+        isEqualButtonClicked = false; //reset the state to test user's intent for next operation
+        
+        firstNumber = result;
+        userInputBuffer = ''; //switch to edit the second Number
 
-                return;
-            }
-        });
+    } else {
+        firstNumber = Number(userInputBuffer); //finalize first number
+        userInputBuffer = ''; //Switch back to edit the second Number
     }
 
-    firstNumber = Number(userInputBuffer);
-    userInputBuffer = ''; //Switch back to edit mode
 }
 
 operators.forEach( operator => {
@@ -90,20 +101,7 @@ equalButton.addEventListener('click', (event) => {
     result = operation(firstNumber, operator, secondNumber);
     textBoxDisplay.textContent = result;
 
-    //If press an operator after, result will be assigned to input Buffer so first Number is assigned with latest result
-    operators.forEach( operator => {
-        if( operator.clicked === true ) {
-            userInputBuffer = String(result);
-        }
-    })
-
-    //If press a number, it will be like we start a whole new calculation, forget about everything
-    numberButtons.forEach( button => {
-        if (button.clicked === true) {
-            userInputBuffer = ''; //Switch back to edit mode (which is actually forget all calculations)
-        }
-    });
-
+    isEqualButtonClicked = true;
 })
 
 
