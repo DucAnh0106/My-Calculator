@@ -22,13 +22,6 @@ function operation(firstNumber, operator, secondNumber) {
 }
 }
 
-function roundUpNumber( number ) {
-    //my intention is to round up result to at most 15 DP (prevent infinite decimal points)
-    let roundedNum = number * (10 ** 15);
-
-    return Math.round(roundedNum) / (10 ** 15);
-}
-
 let firstNumber;
 let operator;
 let secondNumber;
@@ -107,7 +100,7 @@ equalButton.addEventListener('click', (event) => {
     secondNumber = Number(userInputBuffer);
 
     //output the result
-    result = roundUpNumber( operation(firstNumber, operator, secondNumber) );
+    result = operation(firstNumber, operator, secondNumber);
     textBoxDisplay.textContent = result;
 
     //change state of equal button
