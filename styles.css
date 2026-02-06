@@ -69,6 +69,12 @@ body {
     color: white;
 }
 
+/* Exception for the +/- button in order not to mess more with the logic */
+#changeSign {
+    background-color: #4E505F;
+    color: white;
+}
+
 .topRowFunctions_buttons {
     background-color: #656879;
     color: #4FC3F7;

@@ -167,7 +167,6 @@ const addPercentage = function() {
     }
 }
 
-
 topRowFunctions_buttons.forEach( button => {
     if (button.textContent === 'AC') {
         button.addEventListener('click', clearText );
@@ -177,6 +176,33 @@ topRowFunctions_buttons.forEach( button => {
         button.addEventListener('click', addPercentage );
     }
 })
+
+
+
+//target change sign button
+const changeSignBtn = document.querySelector('#changeSign');
+
+const changeSign = function() {
+    //A new post-equal decision: User presses change sign after getting the result
+    if (isEqualButtonClicked) {
+        //doesn't matter whether result is negative or positive -> just change sign
+        result = result * (-1)
+    }
+    //User is current typing a number and want to change its sign
+    else if (userInputBuffer !== '') {
+        console.log(userInputBuffer);
+        //Convert current input buffer into number and change sign of it
+        let modifiedInput = Number(userInputBuffer) * (-1);
+
+        //Update the buffer with new value
+        userInputBuffer = String(modifiedInput);
+
+        //Update screen display
+        textBoxDisplay.textContent = userInputBuffer;
+    }
+}
+
+changeSignBtn.addEventListener('click', changeSign );
 
 
 
