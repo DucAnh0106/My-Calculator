@@ -114,7 +114,31 @@ equalButton.addEventListener('click', (event) => {
     isEqualButtonClicked = true;
 })
 
+//Code for AC and DEL
+const topRowFunctions_buttons = document.querySelectorAll('.topRowFunctions_buttons');
 
+const clearText = function() {
+
+}
+
+const deleteText = function() {
+
+}
+
+const addPercentage = function() {
+
+}
+
+
+topRowFunctions_buttons.forEach( button => {
+    if (button.textContent === 'AC') {
+        button.addEventListener('click', clearText );
+    } else if (button.textContent === 'DEL') {
+        button.addEventListener('click', deleteText );
+    } else {
+        button.addEventListener('click', addPercentage );
+    }
+})
 
 
 
