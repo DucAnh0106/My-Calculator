@@ -129,43 +129,37 @@ const clearText = function() {
 }
 
 const deleteText = function() {
-    //A new post-equal decision: to edit Result then chain operations
+    //A new post-equal decision: to assign result to Buffer and enter the EDIT mode (technically we're back at first operation world)
     if(isEqualButtonClicked) {
-        //modify result 
-        modifiedResult = String(result).slice(0,-1);
+        //move result back to Buffer 
+        userInputBuffer = String(result);
+        isEqualButtonClicked = false;
 
-        //display modified result
-        textBoxDisplay.textContent = modifiedResult;
+    } 
+    //this is for when we're editing first/second number
+    userInputBuffer = userInputBuffer.slice(0, -1);
 
-        //this time, have to reassign new value back to result
-        //(can also put in chooseOperator but it might confuse the code)
-        //=> so it's like a tradeoff, we keep updating the latest value to result
-        result = Number(modifiedResult);
-    } else { //this is for when we're editing first/second number
-       userInputBuffer = userInputBuffer.slice(0, -1);
-
-       textBoxDisplay.textContent = userInputBuffer;
-    }
+    textBoxDisplay.textContent = userInputBuffer;
+    
 }
 
 const addPercentage = function() {
     //A new post-equal decision: User presses % immediately after getting a result
     if (isEqualButtonClicked) {
-        result = result / 100;
-        textBoxDisplay.textContent = result;
+        //move result back to Buffer (enter edit mode)
+        userInputBuffer = String(result);
+        isEqualButtonClicked = false;
     } 
-    //User is currently typing a number and want to get percentage of it
-    else if (userInputBuffer !== '') {
-        //Convert current buffer to number and divide by 100
-        let percentValue = Number(userInputBuffer) / 100;
-        
-        //Update the buffer with the new value so future math works
-        userInputBuffer = String(percentValue);
-        
-        //Update the screen
-        textBoxDisplay.textContent = userInputBuffer;
-    }
+    //Convert current buffer to number and divide by 100
+    let percentValue = Number(userInputBuffer) / 100;
+    
+    //Update the buffer with the new value so future math works
+    userInputBuffer = String(percentValue);
+    
+    //Update the screen
+    textBoxDisplay.textContent = userInputBuffer;
 }
+
 
 topRowFunctions_buttons.forEach( button => {
     if (button.textContent === 'AC') {
@@ -178,31 +172,26 @@ topRowFunctions_buttons.forEach( button => {
 })
 
 
-
 //target change sign button
 const changeSignBtn = document.querySelector('#changeSign');
 
 const changeSign = function() {
     //A new post-equal decision: User presses change sign after getting the result
     if (isEqualButtonClicked) {
-        //doesn't matter whether result is negative or positive -> just change sign
-        result = result * (-1)
+        userInputBuffer = String(result);
+        isEqualButtonClicked = true;
     }
-    //User is current typing a number and want to change its sign
-    else if (userInputBuffer !== '') {
-        console.log(userInputBuffer);
-        //Convert current input buffer into number and change sign of it
-        let modifiedInput = Number(userInputBuffer) * (-1);
+    //doesn't matter whether result is negative or positive -> just change sign
+    //Convert current input buffer into number and change sign of it
+    let modifiedInput = Number(userInputBuffer) * (-1);
 
-        //Update the buffer with new value
-        userInputBuffer = String(modifiedInput);
+    //Update the buffer with new value
+    userInputBuffer = String(modifiedInput);
 
-        //Update screen display
-        textBoxDisplay.textContent = userInputBuffer;
-    }
+    //Update screen display
+    textBoxDisplay.textContent = userInputBuffer;
 }
 
 changeSignBtn.addEventListener('click', changeSign );
-
 
 
