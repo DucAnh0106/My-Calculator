@@ -22,6 +22,21 @@ function operation(firstNumber, operator, secondNumber) {
 }
 }
 
+function formatNumber(num) {
+    //my intention is to round up the DISPLAY (of result) to at most 15 DP (prevent infinite decimal points)
+    if(!Number.isFinite(num)) return 'Error';
+
+    //Convert to string with controlled precision
+    //15 signficant figures. 
+    //WHY 15?:
+    //JS numbers are IEEE-754 double-precision floats 
+    //=> gives 53 bits of binary precision which is around 15-16 decimal significant digits
+    const str = num.toPrecision(15);
+
+    //Remove trailing zeros caused by precision error (of computer)
+    return Number(str).toString();
+}
+
 let firstNumber;
 let operator;
 let secondNumber;
@@ -101,7 +116,7 @@ equalButton.addEventListener('click', (event) => {
 
     //output the result
     result = operation(firstNumber, operator, secondNumber);
-    textBoxDisplay.textContent = result;
+    textBoxDisplay.textContent = formatNumber( result );
 
     //change state of equal button
     isEqualButtonClicked = true;
