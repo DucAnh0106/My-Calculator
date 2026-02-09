@@ -101,18 +101,12 @@ operators.forEach(operator => {
 //target equal button
 const equalButton = document.querySelector('#equalButton');
 
-equalButton.addEventListener('click', (event) => {
-    // finalize the second number
-    rightOperand = Number(editBuffer);
-
-    //output the result
-    result = operation(leftOperand
-    , operator, rightOperand);
-    textBoxDisplay.textContent = formatNumber( result );
-
-    //change state of equal button
+function handleEqual() {
+    rightOperand = Number(userInputBuffer);
+    result = compute(leftOperand, operator, rightOperand);
+    updateDisplay(formatNumber(result));
     lastActionWasEqual = true;
-})
+}
 
 //Code for AC and DEL
 const topRowFunctions_buttons = document.querySelectorAll('.topRowFunctions_buttons');
