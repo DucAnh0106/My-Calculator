@@ -1,4 +1,6 @@
-// ===== Math logic =====
+// =====================
+// Math logic (pure)
+// =====================
 function add(a, b) { return a + b; }
 function subtract(a, b) { return a - b; }
 function multiply(a, b) { return a * b; }
@@ -8,113 +10,95 @@ const OPERATIONS = {
     '+': add,
     '-': subtract,
     '×': multiply,
-    '÷': divide,
+    '÷': divide
 };
 
 function compute(a, operator, b) {
     return OPERATIONS[operator](a, b);
 }
 
-function formatNumber(num) {
-    //my intention is to round up the DISPLAY (of result) to at most 15 DP (prevent infinite decimal points)
-    if(!Number.isFinite(num)) return 'Error';
-
-    //Convert to string with controlled precision
-    //15 signficant figures. 
-    //WHY 15?:
-    //JS numbers are IEEE-754 double-precision floats 
-    //=> gives 53 bits of binary precision which is around 15-16 decimal significant digits
-    const str = num.toPrecision(15);
-
-    //Remove trailing zeros caused by precision error (of computer)
-    return Number(str).toString();
+// Optional: precision safety
+function formatNumber(value) {
+    return Number(Number(value).toPrecision(15)).toString();
 }
 
-// ===== Calculator state =====
+// =====================
+// Calculator state
+// =====================
 let leftOperand;
 let rightOperand;
 let operator;
 let result;
 
-let userInputBuffer = '';
+let editBuffer = '';
 let lastActionWasEqual = false;
 
+// =====================
+// DOM references
+// =====================
+const textBox = document.querySelector('#textBox');
+const display = document.createElement('span');
+textBox.appendChild(display);
 
+const numberButtons = document.querySelectorAll('.numberButtons');
+const operatorButtons = document.querySelectorAll('.operators');
+const equalButton = document.querySelector('#equalButton');
+const utilityButtons = document.querySelectorAll('.topRowFunctions_buttons');
+const changeSignBtn = document.querySelector('#changeSign');
+
+// =====================
+// Display helpers
+// =====================
 function updateDisplay(value) {
-    textBoxDisplay.textContent = value;
+    display.textContent = value;
 }
 
+// =====================
+// Intent helpers
+// =====================
 function enterEditModeFromResult() {
     if (!lastActionWasEqual) return;
-    userInputBuffer = String(result);
+    editBuffer = String(result);
     lastActionWasEqual = false;
 }
 
-
-//target text box
-const textBox = document.querySelector('#textBox');
-let textBoxDisplay = document.createElement('span');
-textBox.appendChild(textBoxDisplay);
-
-//target buttons
-const numberButtons = document.querySelectorAll('.numberButtons');
-
-
+// =====================
+// Input handlers
+// =====================
 function handleNumberInput(digit) {
     if (lastActionWasEqual) {
-        userInputBuffer = digit;
+        editBuffer = digit;
         lastActionWasEqual = false;
     } else {
-        userInputBuffer += digit;
+        editBuffer += digit;
     }
-    updateDisplay(userInputBuffer);
+    updateDisplay(editBuffer);
 }
-
-numberButtons.forEach(btn => {
-    btn.addEventListener('click', e =>
-        handleNumberInput(e.target.textContent)
-    );
-});
-
-
-//target operators
-const operators = document.querySelectorAll('.operators');
 
 function handleOperator(op) {
     if (lastActionWasEqual) {
         leftOperand = result;
         lastActionWasEqual = false;
     } else {
-        leftOperand = Number(userInputBuffer);
+        leftOperand = Number(editBuffer);
     }
 
     operator = op;
-    userInputBuffer = '';
+    editBuffer = '';
     updateDisplay(op);
 }
 
-
-operators.forEach(operator => {
-    operator.addEventListener('click', handleOperator(operator));
-})
-
-//target equal button
-const equalButton = document.querySelector('#equalButton');
-
 function handleEqual() {
-    rightOperand = Number(userInputBuffer);
+    rightOperand = Number(editBuffer);
     result = compute(leftOperand, operator, rightOperand);
     updateDisplay(formatNumber(result));
     lastActionWasEqual = true;
 }
 
-//Code for AC and DEL
-const topRowFunctions_buttons = document.querySelectorAll('.topRowFunctions_buttons');
-
 function handleDelete() {
     enterEditModeFromResult();
-    userInputBuffer = userInputBuffer.slice(0, -1);
-    updateDisplay(userInputBuffer);
+    editBuffer = editBuffer.slice(0, -1);
+    updateDisplay(editBuffer);
 }
 
 function handleClear() {
@@ -122,38 +106,48 @@ function handleClear() {
     rightOperand = undefined;
     operator = undefined;
     result = undefined;
-    userInputBuffer = '';
+    editBuffer = '';
     lastActionWasEqual = false;
     updateDisplay('');
 }
 
 function handlePercentage() {
     enterEditModeFromResult();
-    userInputBuffer = String(Number(userInputBuffer) / 100);
-    updateDisplay(userInputBuffer);
+    editBuffer = String(Number(editBuffer) / 100);
+    updateDisplay(editBuffer);
 }
 
 function handleChangeSign() {
     enterEditModeFromResult();
-    userInputBuffer = String(Number(userInputBuffer) * -1);
-    updateDisplay(userInputBuffer);
+    editBuffer = String(Number(editBuffer) * -1);
+    updateDisplay(editBuffer);
 }
 
+// =====================
+// Event wiring
+// =====================
+numberButtons.forEach(btn => {
+    btn.addEventListener('click', e =>
+        handleNumberInput(e.target.textContent)
+    );
+});
 
-topRowFunctions_buttons.forEach( button => {
-    if (button.textContent === 'AC') {
-        button.addEventListener('click', clearText );
-    } else if (button.textContent === 'DEL') {
-        button.addEventListener('click', deleteText );
+operatorButtons.forEach(btn => {
+    btn.addEventListener('click', e =>
+        handleOperator(e.target.textContent)
+    );
+});
+
+equalButton.addEventListener('click', handleEqual);
+
+utilityButtons.forEach(btn => {
+    if (btn.textContent === 'AC') {
+        btn.addEventListener('click', handleClear);
+    } else if (btn.textContent === 'DEL') {
+        btn.addEventListener('click', handleDelete);
     } else {
-        button.addEventListener('click', addPercentage );
+        btn.addEventListener('click', handlePercentage);
     }
-})
+});
 
-
-//target change sign button
-const changeSignBtn = document.querySelector('#changeSign');
-
-changeSignBtn.addEventListener('click', changeSign );
-
-
+changeSignBtn.addEventListener('click', handleChangeSign);
