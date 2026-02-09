@@ -60,26 +60,22 @@ textBox.appendChild(textBoxDisplay);
 const numberButtons = document.querySelectorAll('.numberButtons');
 
 
-const editNumber = function (event) {
-
-    //check if the user's intent after clicking equal is to restart all calculations
-    //click a number after equal
+function handleNumberInput(digit) {
     if (lastActionWasEqual) {
-        editBuffer = '';
-        editBuffer += event.target.textContent;
-
-        lastActionWasEqual = false; //reset the state to test user's intent for next operation
+        userInputBuffer = digit;
+        lastActionWasEqual = false;
     } else {
-        editBuffer += event.target.textContent;
+        userInputBuffer += digit;
     }
-
-    //display user enter on screen
-    updateDisplay(editBuffer);
+    updateDisplay(userInputBuffer);
 }
 
-numberButtons.forEach( button => {
-    button.addEventListener('click', editNumber);
+numberButtons.forEach(btn => {
+    btn.addEventListener('click', e =>
+        handleNumberInput(e.target.textContent)
+    );
 });
+
 
 //target operators
 const operators = document.querySelectorAll('.operators');
