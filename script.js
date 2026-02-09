@@ -44,6 +44,13 @@ function updateDisplay(value) {
     textBoxDisplay.textContent = value;
 }
 
+function enterEditModeFromResult() {
+    if (!lastActionWasEqual) return;
+    userInputBuffer = String(result);
+    lastActionWasEqual = false;
+}
+
+
 //target text box
 const textBox = document.querySelector('#textBox');
 let textBoxDisplay = document.createElement('span');
