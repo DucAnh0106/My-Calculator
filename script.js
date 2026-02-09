@@ -130,20 +130,12 @@ const clearText = function() {
     updateDisplay('');
 }
 
-const deleteText = function() {
-    //A new post-equal decision: to assign result to Buffer and enter the EDIT mode (technically we're back at first operation world)
-    if(lastActionWasEqual) {
-        //move result back to Buffer 
-        editBuffer = String(result);
-        lastActionWasEqual = false;
-
-    } 
-    //this is for when we're editing first/second number
-    editBuffer = editBuffer.slice(0, -1);
-
-    updateDisplay(editBuffer);
-    
+function handleDelete() {
+    enterEditModeFromResult();
+    userInputBuffer = userInputBuffer.slice(0, -1);
+    updateDisplay(userInputBuffer);
 }
+
 
 const addPercentage = function() {
     //A new post-equal decision: User presses % immediately after getting a result
