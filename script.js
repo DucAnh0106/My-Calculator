@@ -1,25 +1,18 @@
-function addNumbers(firstNumber, secondNumber) {
-    return firstNumber + secondNumber;
-}
-function subtractNumbers(firstNumber, secondNumber) {
-    return firstNumber - secondNumber;
-}
-function divideNumbers(firstNumber, secondNumber) {
-    return firstNumber / secondNumber;
-}
-function multiplyNumbers(firstNumber, secondNumber) {
-    return firstNumber * secondNumber;
-}
-function operation(firstNumber, operator, secondNumber) {
-    if (operator === '+') {
-        return addNumbers(firstNumber, secondNumber);
-    } else if (operator === '-') {
-        return subtractNumbers(firstNumber, secondNumber);
-    } else if (operator === '×') {
-        return multiplyNumbers(firstNumber, secondNumber);
-    } else {
-        return divideNumbers(firstNumber, secondNumber);
-}
+// ===== Math logic =====
+function add(a, b) { return a + b; }
+function subtract(a, b) { return a - b; }
+function multiply(a, b) { return a * b; }
+function divide(a, b) { return a / b; }
+
+const OPERATIONS = {
+    '+': add,
+    '-': subtract,
+    '×': multiply,
+    '÷': divide,
+};
+
+function compute(a, operator, b) {
+    return OPERATIONS[operator](a, b);
 }
 
 function formatNumber(num) {
