@@ -30,15 +30,16 @@ function formatNumber(num) {
     return Number(str).toString();
 }
 
-let firstNumber;
+// ===== Calculator state =====
+let leftOperand;
+let rightOperand;
 let operator;
-let secondNumber;
+let result;
 
 let userInputBuffer = '';
+let lastActionWasEqual = false;
 
-//server to remember have we click the equal button
-//work even if the user spam clicking Equal
-let isEqualButtonClicked = false;
+
 
 //target text box
 const textBox = document.querySelector('#textBox');
@@ -49,20 +50,20 @@ textBox.appendChild(textBoxDisplay);
 const numberButtons = document.querySelectorAll('.numberButtons');
 
 const displayOnScreen = function() {
-    textBoxDisplay.textContent = userInputBuffer;
+    textBoxDisplay.textContent = editBuffer;
 }
 
 const editNumber = function (event) {
 
     //check if the user's intent after clicking equal is to restart all calculations
     //click a number after equal
-    if (isEqualButtonClicked) {
-        userInputBuffer = '';
-        userInputBuffer += event.target.textContent;
+    if (lastActionWasEqual) {
+        editBuffer = '';
+        editBuffer += event.target.textContent;
 
-        isEqualButtonClicked = false; //reset the state to test user's intent for next operation
+        lastActionWasEqual = false; //reset the state to test user's intent for next operation
     } else {
-        userInputBuffer += event.target.textContent;
+        editBuffer += event.target.textContent;
     }
 
     //display user enter on screen
@@ -82,15 +83,17 @@ const chooseOperator = function(event) {
     textBoxDisplay.textContent = operator;
 
     //if an operator is pressed after the equal button is pressed (for 2nd operation onward)
-    if (isEqualButtonClicked) {
-        isEqualButtonClicked = false; //reset the state to test user's intent for next operation
+    if (lastActionWasEqual) {
+        lastActionWasEqual = false; //reset the state to test user's intent for next operation
         
-        firstNumber = result;
-        userInputBuffer = ''; //switch to edit the second Number
+        leftOperand
+     = result;
+        editBuffer = ''; //switch to edit the second Number
 
     } else {
-        firstNumber = Number(userInputBuffer); //finalize first number
-        userInputBuffer = ''; //Switch back to edit the second Number
+        leftOperand
+     = Number(editBuffer); //finalize first number
+        editBuffer = ''; //Switch back to edit the second Number
     }
 
 }
@@ -101,18 +104,18 @@ operators.forEach( operator => {
 
 //target equal button
 const equalButton = document.querySelector('#equalButton');
-let result;
 
 equalButton.addEventListener('click', (event) => {
     // finalize the second number
-    secondNumber = Number(userInputBuffer);
+    rightOperand = Number(editBuffer);
 
     //output the result
-    result = operation(firstNumber, operator, secondNumber);
+    result = operation(leftOperand
+    , operator, rightOperand);
     textBoxDisplay.textContent = formatNumber( result );
 
     //change state of equal button
-    isEqualButtonClicked = true;
+    lastActionWasEqual = true;
 })
 
 //Code for AC and DEL
@@ -121,16 +124,17 @@ const topRowFunctions_buttons = document.querySelectorAll('.topRowFunctions_butt
 //Reset back to a point when we first use the calculator
 const clearText = function() {
     //Reset the visual buffer (what the user is typing)
-    userInputBuffer = '';
+    editBuffer = '';
 
     //Reset the logic variables
-    firstNumber = undefined;
-    secondNumber = undefined; 
+    leftOperand
+ = undefined;
+    rightOperand = undefined; 
     operator = undefined;
     result = undefined;
 
     //Reset the state flag
-    isEqualButtonClicked = false;
+    lastActionWasEqual = false;
 
     //Update the screen to show the empty state
     textBoxDisplay.textContent = '';
@@ -138,34 +142,34 @@ const clearText = function() {
 
 const deleteText = function() {
     //A new post-equal decision: to assign result to Buffer and enter the EDIT mode (technically we're back at first operation world)
-    if(isEqualButtonClicked) {
+    if(lastActionWasEqual) {
         //move result back to Buffer 
-        userInputBuffer = String(result);
-        isEqualButtonClicked = false;
+        editBuffer = String(result);
+        lastActionWasEqual = false;
 
     } 
     //this is for when we're editing first/second number
-    userInputBuffer = userInputBuffer.slice(0, -1);
+    editBuffer = editBuffer.slice(0, -1);
 
-    textBoxDisplay.textContent = userInputBuffer;
+    textBoxDisplay.textContent = editBuffer;
     
 }
 
 const addPercentage = function() {
     //A new post-equal decision: User presses % immediately after getting a result
-    if (isEqualButtonClicked) {
+    if (lastActionWasEqual) {
         //move result back to Buffer (enter edit mode)
-        userInputBuffer = String(result);
-        isEqualButtonClicked = false;
+        editBuffer = String(result);
+        lastActionWasEqual = false;
     } 
     //Convert current buffer to number and divide by 100
-    let percentValue = Number(userInputBuffer) / 100;
+    let percentValue = Number(editBuffer) / 100;
     
     //Update the buffer with the new value so future math works
-    userInputBuffer = String(percentValue);
+    editBuffer = String(percentValue);
     
     //Update the screen
-    textBoxDisplay.textContent = userInputBuffer;
+    textBoxDisplay.textContent = editBuffer;
 }
 
 
@@ -185,19 +189,19 @@ const changeSignBtn = document.querySelector('#changeSign');
 
 const changeSign = function() {
     //A new post-equal decision: User presses change sign after getting the result
-    if (isEqualButtonClicked) {
-        userInputBuffer = String(result);
-        isEqualButtonClicked = true;
+    if (lastActionWasEqual) {
+        editBuffer = String(result);
+        lastActionWasEqual = true;
     }
     //doesn't matter whether result is negative or positive -> just change sign
     //Convert current input buffer into number and change sign of it
-    let modifiedInput = Number(userInputBuffer) * (-1);
+    let modifiedInput = Number(editBuffer) * (-1);
 
     //Update the buffer with new value
-    userInputBuffer = String(modifiedInput);
+    editBuffer = String(modifiedInput);
 
     //Update screen display
-    textBoxDisplay.textContent = userInputBuffer;
+    textBoxDisplay.textContent = editBuffer;
 }
 
 changeSignBtn.addEventListener('click', changeSign );
