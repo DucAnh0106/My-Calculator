@@ -111,47 +111,32 @@ function handleEqual() {
 //Code for AC and DEL
 const topRowFunctions_buttons = document.querySelectorAll('.topRowFunctions_buttons');
 
-//Reset back to a point when we first use the calculator
-const clearText = function() {
-    //Reset the visual buffer (what the user is typing)
-    editBuffer = '';
-
-    //Reset the logic variables
-    leftOperand
- = undefined;
-    rightOperand = undefined; 
-    operator = undefined;
-    result = undefined;
-
-    //Reset the state flag
-    lastActionWasEqual = false;
-
-    //Update the screen to show the empty state
-    updateDisplay('');
-}
-
 function handleDelete() {
     enterEditModeFromResult();
     userInputBuffer = userInputBuffer.slice(0, -1);
     updateDisplay(userInputBuffer);
 }
 
+function handleClear() {
+    leftOperand = undefined;
+    rightOperand = undefined;
+    operator = undefined;
+    result = undefined;
+    userInputBuffer = '';
+    lastActionWasEqual = false;
+    updateDisplay('');
+}
 
-const addPercentage = function() {
-    //A new post-equal decision: User presses % immediately after getting a result
-    if (lastActionWasEqual) {
-        //move result back to Buffer (enter edit mode)
-        editBuffer = String(result);
-        lastActionWasEqual = false;
-    } 
-    //Convert current buffer to number and divide by 100
-    let percentValue = Number(editBuffer) / 100;
-    
-    //Update the buffer with the new value so future math works
-    editBuffer = String(percentValue);
-    
-    //Update the screen
-    updateDisplay(editBuffer);
+function handlePercentage() {
+    enterEditModeFromResult();
+    userInputBuffer = String(Number(userInputBuffer) / 100);
+    updateDisplay(userInputBuffer);
+}
+
+function handleChangeSign() {
+    enterEditModeFromResult();
+    userInputBuffer = String(Number(userInputBuffer) * -1);
+    updateDisplay(userInputBuffer);
 }
 
 
@@ -168,23 +153,6 @@ topRowFunctions_buttons.forEach( button => {
 
 //target change sign button
 const changeSignBtn = document.querySelector('#changeSign');
-
-const changeSign = function() {
-    //A new post-equal decision: User presses change sign after getting the result
-    if (lastActionWasEqual) {
-        editBuffer = String(result);
-        lastActionWasEqual = true;
-    }
-    //doesn't matter whether result is negative or positive -> just change sign
-    //Convert current input buffer into number and change sign of it
-    let modifiedInput = Number(editBuffer) * (-1);
-
-    //Update the buffer with new value
-    editBuffer = String(modifiedInput);
-
-    //Update screen display
-    updateDisplay(editBuffer);
-}
 
 changeSignBtn.addEventListener('click', changeSign );
 
