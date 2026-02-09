@@ -40,6 +40,9 @@ let userInputBuffer = '';
 let lastActionWasEqual = false;
 
 
+function updateDisplay(value) {
+    textBoxDisplay.textContent = value;
+}
 
 //target text box
 const textBox = document.querySelector('#textBox');
@@ -49,9 +52,6 @@ textBox.appendChild(textBoxDisplay);
 //target buttons
 const numberButtons = document.querySelectorAll('.numberButtons');
 
-const displayOnScreen = function() {
-    textBoxDisplay.textContent = editBuffer;
-}
 
 const editNumber = function (event) {
 
@@ -67,7 +67,7 @@ const editNumber = function (event) {
     }
 
     //display user enter on screen
-    displayOnScreen();
+    updateDisplay(editBuffer);
 }
 
 numberButtons.forEach( button => {
@@ -137,7 +137,7 @@ const clearText = function() {
     lastActionWasEqual = false;
 
     //Update the screen to show the empty state
-    textBoxDisplay.textContent = '';
+    updateDisplay('');
 }
 
 const deleteText = function() {
@@ -151,7 +151,7 @@ const deleteText = function() {
     //this is for when we're editing first/second number
     editBuffer = editBuffer.slice(0, -1);
 
-    textBoxDisplay.textContent = editBuffer;
+    updateDisplay(editBuffer);
     
 }
 
@@ -169,7 +169,7 @@ const addPercentage = function() {
     editBuffer = String(percentValue);
     
     //Update the screen
-    textBoxDisplay.textContent = editBuffer;
+    updateDisplay(editBuffer);
 }
 
 
@@ -201,7 +201,7 @@ const changeSign = function() {
     editBuffer = String(modifiedInput);
 
     //Update screen display
-    textBoxDisplay.textContent = editBuffer;
+    updateDisplay(editBuffer);
 }
 
 changeSignBtn.addEventListener('click', changeSign );
