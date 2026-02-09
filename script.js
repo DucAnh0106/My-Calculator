@@ -80,29 +80,22 @@ numberButtons.forEach(btn => {
 //target operators
 const operators = document.querySelectorAll('.operators');
 
-const chooseOperator = function(event) {
-    //display operator on the screen
-    operator = event.target.textContent;
-    textBoxDisplay.textContent = operator;
-
-    //if an operator is pressed after the equal button is pressed (for 2nd operation onward)
+function handleOperator(op) {
     if (lastActionWasEqual) {
-        lastActionWasEqual = false; //reset the state to test user's intent for next operation
-        
-        leftOperand
-     = result;
-        editBuffer = ''; //switch to edit the second Number
-
+        leftOperand = result;
+        lastActionWasEqual = false;
     } else {
-        leftOperand
-     = Number(editBuffer); //finalize first number
-        editBuffer = ''; //Switch back to edit the second Number
+        leftOperand = Number(userInputBuffer);
     }
 
+    operator = op;
+    userInputBuffer = '';
+    updateDisplay(op);
 }
 
-operators.forEach( operator => {
-    operator.addEventListener('click', chooseOperator);
+
+operators.forEach(operator => {
+    operator.addEventListener('click', handleOperator(operator));
 })
 
 //target equal button
